@@ -1,33 +1,35 @@
-/*
+ï»¿/*
 Control de temperatura para impresoras 3D. 
 
-Este proyecto está pensado para controlar la temperatura de la cama caliente y el extrusor de impresión de una impresora de tipo ANET A8, 
+Este proyecto estÃ¡ pensado para controlar la temperatura de la cama caliente y el extrusor de impresiÃ³n de una impresora de tipo ANET A8, 
 pero se puede adaptar a cualquier otro tipo de impresora.
 
-La idea es definir los parámetros máximos de temperatura y en caso de que se superen, cortar la corriente de alimentación del extrusor o la cama caliente.
+La idea es definir los parÃ¡metros mÃ¡ximos de temperatura y en caso de que se superen, cortar la corriente de alimentaciÃ³n del extrusor o la cama caliente.
 
 Base:
 	Arduino UNO
-	Extra: NodeMCU con conexión a internet
+	Extra: NodeMCU con conexiÃ³n a internet
 
 Entrada:
-	Sensor para cama: máximo 100º
-	Sensor para cabezal: más de 220º
+	Sensor para cama: mÃ¡ximo 100Âº
+	Sensor para extrusor: mÃ¡s de 220Âº
 
-	Extra: Sensores para las placas electrónicas, y evitar sobrecalentamientos
+	Extra: Sensores para las placas electrÃ³nicas, y evitar sobrecalentamientos
+	Extra: Sensores para los relÃ©s de control de las resistencias
 
 Salida:
-	Alarma acústica
-	Relé que corte la alimentación correspondiente a la resistencia del extrusor o la cama
+	Alarma acÃºstica
+	RelÃ© que corte la alimentaciÃ³n correspondiente a la resistencia del extrusor
+	RelÃ© que corte la alimentaciÃ³n correspondiente a la resistencia de la cama
+	LCD con info de la TÂª actual y mÃ¡xima para extrusor y cama
 
 	Extra: Aviso mediante Telegram o similar
-	Extra: Que avise por incremento de Tª
+	Extra: Que avise por incremento de TÂª
 	Extra: Que avise en caso de que salte la alarma
-	Extra: LCD con info de la Tª
-
+	
 */
 
-// definir parámetros 
+// definir parÃ¡metros  
 
 // Pines entrada
 const int pinSensorCama		= 9;	// ToDo: verificar
@@ -37,14 +39,14 @@ const int pinSensorExtrusor = 10;	// ToDo: verificar
 const int pinReleCama		= 11;	// ToDo: verificar
 const int pinReleExtrusor	= 12;	// ToDo: verificar
 
-// temperaturas máximas expresadas en grados centígrados
+// temperaturas mÃ¡ximas expresadas en grados centÃ­grados
 int tempMaxCama		= 60;
 int tempMaxExtrusor = 220;
 
 int tempCamaActual		= 0;
 int tempExtrusorActual	= 0;
 
-// parámetro que guarda el estado de la alarma
+// parÃ¡metro que guarda el estado de la alarma
 boolean alarmaActivada = false;
  
 void setup() {
@@ -52,7 +54,7 @@ void setup() {
 	pinMode(pinSensorCama, INPUT);
 	pinMode(pinSensorExtrusor, INPUT);
 
-	// definimos los pines de los relés como de salida
+	// definimos los pines de los relÃ©s como de salida
 	pinMode(pinReleCama, OUTPUT);
 	pinMode(pinReleExtrusor, OUTPUT);
 
@@ -86,6 +88,7 @@ void loop() {
 
 }
 
+// RelÃ© cama
 void activarReleCama(){
 	digitalWrite(pinReleCama, HIGH);
 }
@@ -94,6 +97,7 @@ void desactivarReleCama() {
 	digitalWrite(pinReleCama, LOW);
 }
 
+// RelÃ© extrusor
 void activarReleExtrusor() {
 	digitalWrite(pinReleExtrusor, HIGH);
 }
@@ -103,14 +107,14 @@ void desactivarReleExtrusor() {
 }
 
 int leerSensorCama() {
-	// leer y convertir los datos a grados centígrados
+	// leer y convertir los datos a grados centÃ­grados
 
 	// devolver la lectura del sensor
 
 }
 
 int leerSensorExtrusor() {
-	// leer y convertir los datos a grados centígrados
+	// leer y convertir los datos a grados centÃ­grados
 
 	// devolver la lectura del sensor
 
